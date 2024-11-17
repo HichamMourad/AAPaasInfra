@@ -54,8 +54,8 @@
         tags:
           ansible-demo: "true"
           Name: "{{ instance_names[0] }}"
-        network:
-          assign_public_ip: true
+        network_interfaces:
+          - assign_public_ip: true
         vpc_subnet_id: "{{ ec2_vpc_subnet_id.subnets[0].subnet_id }}"
         volumes:
           - device_name: /dev/sda1
@@ -81,8 +81,8 @@
         tags:
           ansible-demo: "true"
           Name: "{{ instance_names[1] }}"
-        network:
-          assign_public_ip: true
+        network_interfaces:
+          - assign_public_ip: true
         vpc_subnet_id: "{{ ec2_vpc_subnet_id.subnets[0].subnet_id }}"
         volumes:
           - device_name: /dev/sda1
@@ -108,8 +108,8 @@
         tags:
           ansible-demo: "true"
           Name: "{{ instance_names[2] }}"
-        network:
-          assign_public_ip: true
+        network_interfaces:
+          - assign_public_ip: true
         vpc_subnet_id: "{{ ec2_vpc_subnet_id.subnets[0].subnet_id }}"
         volumes:
           - device_name: /dev/sda1
@@ -135,8 +135,8 @@
         tags:
           ansible-demo: "true"
           Name: "{{ instance_names[3] }}"
-        network:
-          assign_public_ip: true
+        network_interfaces:
+          - assign_public_ip: true
         vpc_subnet_id: "{{ ec2_vpc_subnet_id.subnets[0].subnet_id }}"
         volumes:
           - device_name: /dev/sda1
