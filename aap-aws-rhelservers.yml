@@ -4,7 +4,6 @@
   connection: local
   gather_facts: false
   vars:
-    count: 4
     instance_names:
       - rhel-AIserver
       - rhel-APPserver
@@ -40,9 +39,9 @@
       ansible.builtin.debug:
         msg: "{{ ec2_vpc_subnet_id }}"
 
-    - name: Create EC2 instances for the demo.
+    - name: Create EC2 instance 1 for the demo.
       amazon.aws.ec2_instance:
-        name: "{{ item }}"
+        name: "{{ instance_names[0] }}"
         key_name: "{{ ec2_key_name | default('hmsshkey') }}"
         security_group: "{{ ec2_security_group | default('ansible-aas-sg') }}"
         instance_type: "{{ ec2_instance_type | default('t2.micro') }}"
@@ -54,7 +53,7 @@
           instance-state-name: running
         tags:
           ansible-demo: "true"
-          Name: "{{ item }}"
+          Name: "{{ instance_names[0] }}"
         network:
           assign_public_ip: true
         vpc_subnet_id: "{{ ec2_vpc_subnet_id.subnets[0].subnet_id }}"
@@ -66,27 +65,107 @@
               iops: "{{ ec2_iops | default('3000') }}"
               throughput: "{{ ec2_throughput | default('125') }}"
               delete_on_termination: "{{ delete_on_termination | default(True) }}"
-      loop: "{{ instance_names }}"
-      register: control_output
 
-    - name: Grab instance ids to tag them all
-      amazon.aws.ec2_instance_info:
+    - name: Create EC2 instance 2 for the demo.
+      amazon.aws.ec2_instance:
+        name: "{{ instance_names[1] }}"
+        key_name: "{{ ec2_key_name | default('hmsshkey') }}"
+        security_group: "{{ ec2_security_group | default('ansible-aas-sg') }}"
+        instance_type: "{{ ec2_instance_type | default('t2.micro') }}"
+        image_id: "{{ rhel_ami.image_id }}"
         region: "{{ ec2_region | default('us-east-2') }}"
+        exact_count: "{{ count | default('1') }}"
+        state: running
         filters:
           instance-state-name: running
-          "tag:ansible-demo": "true"
-      register: control_output
-
-    - name: Ensure tags are present
-      amazon.aws.ec2_tag:
-        region: "{{ ec2_region | default('us-east-2') }}"
-        resource: "{{ item.1.instance_id }}"
-        state: present
         tags:
-          Name: "{{ item.0 + 1 }}"
-          name: "{{ item.0 + 1 }}"
-          Index: "{{ item[0] }}"
-          launch_time: "{{ item.1.launch_time }}"
-      with_indexed_items:
-        - "{{ control_output.instances }}"
-      when: control_output.instances | length > 0
+          ansible-demo: "true"
+          Name: "{{ instance_names[1] }}"
+        network:
+          assign_public_ip: true
+        vpc_subnet_id: "{{ ec2_vpc_subnet_id.subnets[0].subnet_id }}"
+        volumes:
+          - device_name: /dev/sda1
+            ebs:
+              volume_type: "{{ ec2_volume_type | default('gp3') }}"
+              volume_size: "{{ ec2_volume_size | default('40') }}"
+              iops: "{{ ec2_iops | default('3000') }}"
+              throughput: "{{ ec2_throughput | default('125') }}"
+              delete_on_termination: "{{ delete_on_termination | default(True) }}"
+
+    - name: Create EC2 instance 3 for the demo.
+      amazon.aws.ec2_instance:
+        name: "{{ instance_names[2] }}"
+        key_name: "{{ ec2_key_name | default('hmsshkey') }}"
+        security_group: "{{ ec2_security_group | default('ansible-aas-sg') }}"
+        instance_type: "{{ ec2_instance_type | default('t2.micro') }}"
+        image_id: "{{ rhel_ami.image_id }}"
+        region: "{{ ec2_region | default('us-east-2') }}"
+        exact_count: "{{ count | default('1') }}"
+        state: running
+        filters:
+          instance-state-name: running
+        tags:
+          ansible-demo: "true"
+          Name: "{{ instance_names[2] }}"
+        network:
+          assign_public_ip: true
+        vpc_subnet_id: "{{ ec2_vpc_subnet_id.subnets[0].subnet_id }}"
+        volumes:
+          - device_name: /dev/sda1
+            ebs:
+              volume_type: "{{ ec2_volume_type | default('gp3') }}"
+              volume_size: "{{ ec2_volume_size | default('40') }}"
+              iops: "{{ ec2_iops | default('3000') }}"
+              throughput: "{{ ec2_throughput | default('125') }}"
+              delete_on_termination: "{{ delete_on_termination | default(True) }}"
+
+    - name: Create EC2 instance 4 for the demo.
+      amazon.aws.ec2_instance:
+        name: "{{ instance_names[3] }}"
+        key_name: "{{ ec2_key_name | default('hmsshkey') }}"
+        security_group: "{{ ec2_security_group | default('ansible-aas-sg') }}"
+        instance_type: "{{ ec2_instance_type | default('t2.micro') }}"
+        image_id: "{{ rhel_ami.image_id }}"
+        region: "{{ ec2_region | default('us-east-2') }}"
+        exact_count: "{{ count | default('1') }}"
+        state: running
+        filters:
+          instance-state-name: running
+        tags:
+          ansible-demo: "true"
+          Name: "{{ instance_names[3] }}"
+        network:
+          assign_public_ip: true
+        vpc_subnet_id: "{{ ec2_vpc_subnet_id.subnets[0].subnet_id }}"
+        volumes:
+          - device_name: /dev/sda1
+            ebs:
+              volume_type: "{{ ec2_volume_type | default('gp3') }}"
+              volume_size: "{{ ec2_volume_size | default('40') }}"
+              iops: "{{ ec2_iops | default('3000') }}"
+              throughput: "{{ ec2_throughput | default('125') }}"
+              delete_on_termination: "{{ delete_on_termination | default(True) }}"
+
+#      register: control_output
+
+    # - name: Grab instance ids to tag them all
+    #   amazon.aws.ec2_instance_info:
+    #     region: "{{ ec2_region | default('us-east-2') }}"
+    #     filters:
+    #       instance-state-name: running
+    #       "tag:ansible-demo": "true"
+    #   register: control_output
+
+    # - name: Ensure tags are present
+    #   amazon.aws.ec2_tag:
+    #     region: "{{ ec2_region | default('us-east-2') }}"
+    #     resource: "{{ item.1.instance_id }}"
+    #     state: present
+    #     tags:
+    #       Name: "{{ item.0 + 1 }}"
+    #       Index: "{{ item[0] }}"
+    #       launch_time: "{{ item.1.launch_time }}"
+    #   with_indexed_items:
+    #     - "{{ control_output.instances }}"
+    #   when: control_output.instances | length > 0
