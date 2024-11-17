@@ -42,7 +42,7 @@
 
     - name: Create EC2 instances for the demo.
       amazon.aws.ec2_instance:
-        name: "{{ item.0 + 1 }}"
+        name: "{{ item }}"
         key_name: "{{ ec2_key_name | default('hmsshkey') }}"
         security_group: "{{ ec2_security_group | default('ansible-aas-sg') }}"
         instance_type: "{{ ec2_instance_type | default('t2.micro') }}"
@@ -54,7 +54,7 @@
           instance-state-name: running
         tags:
           ansible-demo: "true"
-          Name: "{{ item }}"
+          Name: "{{ item.0 + 1 }}"
         network:
           assign_public_ip: true
         vpc_subnet_id: "{{ ec2_vpc_subnet_id.subnets[0].subnet_id }}"
