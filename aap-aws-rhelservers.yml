@@ -47,7 +47,7 @@
         instance_type: "{{ ec2_instance_type | default('t2.micro') }}"
         image_id: "{{ rhel_ami.image_id }}"
         region: "{{ ec2_region | default('us-east-2') }}"
-        exact_count: "{{ count | default('1') }}"
+#        exact_count: "{{ count | default('1') }}"
         state: running
         filters:
           instance-state-name: running
@@ -74,7 +74,7 @@
         instance_type: "{{ ec2_instance_type | default('t2.micro') }}"
         image_id: "{{ rhel_ami.image_id }}"
         region: "{{ ec2_region | default('us-east-2') }}"
-        exact_count: "{{ count | default('1') }}"
+#        exact_count: "{{ count | default('1') }}"
         state: running
         filters:
           instance-state-name: running
@@ -101,7 +101,7 @@
         instance_type: "{{ ec2_instance_type | default('t2.micro') }}"
         image_id: "{{ rhel_ami.image_id }}"
         region: "{{ ec2_region | default('us-east-2') }}"
-        exact_count: "{{ count | default('1') }}"
+#        exact_count: "{{ count | default('1') }}"
         state: running
         filters:
           instance-state-name: running
@@ -128,7 +128,7 @@
         instance_type: "{{ ec2_instance_type | default('t2.micro') }}"
         image_id: "{{ rhel_ami.image_id }}"
         region: "{{ ec2_region | default('us-east-2') }}"
-        exact_count: "{{ count | default('1') }}"
+#        exact_count: "{{ count | default('1') }}"
         state: running
         filters:
           instance-state-name: running
