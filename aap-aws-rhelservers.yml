@@ -54,7 +54,7 @@
           instance-state-name: running
         tags:
           ansible-demo: "true"
-          Name: "{{ item.0 + 1 }}"
+          Name: "{{ item }}"
         network:
           assign_public_ip: true
         vpc_subnet_id: "{{ ec2_vpc_subnet_id.subnets[0].subnet_id }}"
@@ -84,6 +84,7 @@
         state: present
         tags:
           Name: "{{ item.0 + 1 }}"
+          name: "{{ item.0 + 1 }}"
           Index: "{{ item[0] }}"
           launch_time: "{{ item.1.launch_time }}"
       with_indexed_items:
