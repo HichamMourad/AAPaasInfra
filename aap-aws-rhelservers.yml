@@ -44,8 +44,6 @@
         region: "{{ ec2_region | default('us-east-2') }}"
 #        exact_count: "{{ count | default('1') }}"
         state: running
-        filters:
-          instance-state-name: running
         tags:
           ansible-demo: "true"
           Name: rhel-AIserver
@@ -71,8 +69,6 @@
         region: "{{ ec2_region | default('us-east-2') }}"
 #        exact_count: "{{ count | default('1') }}"
         state: running
-        filters:
-          instance-state-name: running
         tags:
           ansible-demo: "true"
           Name: "rhel-APPserver"
@@ -98,8 +94,6 @@
         region: "{{ ec2_region | default('us-east-2') }}"
 #        exact_count: "{{ count | default('1') }}"
         state: running
-        filters:
-          instance-state-name: running
         tags:
           ansible-demo: "true"
           Name: "rhel-WEBserver"
@@ -125,8 +119,6 @@
         region: "{{ ec2_region | default('us-east-2') }}"
 #        exact_count: "{{ count | default('1') }}"
         state: running
-        filters:
-          instance-state-name: running
         tags:
           ansible-demo: "true"
           Name: "rhel-DBserver}}"
