@@ -46,7 +46,7 @@
         instance_type: "{{ ec2_instance_type | default('t2.micro') }}"
         image_id: "{{ rhel_ami.image_id }}"
         region: "{{ ec2_region | default('us-east-2') }}"
-        exact_count: "{{ ec2_exact_count | default('1') }}"
+#        exact_count: "{{ ec2_exact_count | default('1') }}"
         state: running
         filters:
           instance-state-name: running
@@ -80,7 +80,7 @@
         resource: "{{ item.1.instance_id }}"
         state: present
         tags:
-          Name: "rhel-app-{{ item.0 + 1 }}"
+#          Name: "rhel-app-{{ item.0 + 1 }}"
           Index: "{{ item[0] }}"
           launch_time: "{{ item.1.launch_time }}"
       with_indexed_items:
