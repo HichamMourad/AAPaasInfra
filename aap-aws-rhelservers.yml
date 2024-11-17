@@ -3,6 +3,11 @@
   hosts: localhost
   connection: local
   gather_facts: false
+  vars:
+    appnames:
+      - name: rhel-dbserver
+      - name: rhel-appserver
+      - name: rhel-webserver
   tasks:
     # Using ec2_ami_facts allows us to find a particular ami instance id regardless of region
     # Look for owner 309956199498 to find official Red Hat AMIs
@@ -35,6 +40,7 @@
 
     - name: Create EC2 instances for the demo.
       amazon.aws.ec2_instance:
+        name: "{{ item.name }}"
         key_name: "{{ ec2_key_name | default('hmsshkey') }}"
         security_group: "{{ ec2_security_group | default('ansible-aas-sg') }}"
         instance_type: "{{ ec2_instance_type | default('t2.micro') }}"
@@ -57,6 +63,7 @@
               iops: "{{ ec2_iops | default('3000') }}"
               throughput: "{{ ec2_throughput | default('125') }}"
               delete_on_termination: "{{ delete_on_termination | default(True) }}"
+      loop: "{{ appnames }}"
       register: control_output
 
     - name: Grab instance ids to tag them all
