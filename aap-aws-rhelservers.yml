@@ -6,10 +6,10 @@
   vars:
     count: 4
     instance_names:
-      - rhel-dbserver
-      - rhel-appserver
-      - rhel-webserver
       - rhel-AIserver
+      - rhel-APPserver
+      - rhel-WEBserver
+      - rhel-DBserver
   tasks:
     # Using ec2_ami_facts allows us to find a particular ami instance id regardless of region
     # Look for owner 309956199498 to find official Red Hat AMIs
